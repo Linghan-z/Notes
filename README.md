@@ -3,7 +3,7 @@ tags: []
 parent: ""
 collections:
     - 'My Notes'
-version: 10719
+version: 11127
 libraryID: 1
 itemKey: LJSU8E3B
 
@@ -111,6 +111,10 @@ itemKey: LJSU8E3B
 
 <a href="zotero://note/u/WFZGUQVG/" rel="noopener noreferrer nofollow" zhref="zotero://note/u/WFZGUQVG/" ztype="znotelink" class="internal-link">“Prefix-Tuning: Optimizing Continuous Prompts for Generation” (Li and Liang, 2021, p. 1)</a>
 
+### The Power of Scale for Parameter-Efﬁcient Prompt Tuning
+
+<a href="zotero://note/u/BZ7NXSJY/" rel="noopener noreferrer nofollow" zhref="zotero://note/u/BZ7NXSJY/" ztype="znotelink" class="internal-link">“The Power of Scale for Parameter-Efficient Prompt Tuning” (Lester et al., 2021, pp. -)</a>
+
 ### Adapter
 
 <a href="zotero://note/u/NJK8CNGD/" rel="noopener noreferrer nofollow" zhref="zotero://note/u/NJK8CNGD/" ztype="znotelink" class="internal-link">“Parameter-Efficient Transfer Learning for NLP” (Houlsby et al., 2019, p. 1)</a>
@@ -118,7 +122,3 @@ itemKey: LJSU8E3B
 ### LORA: LOW-RANK ADAPTATION OF LARGE LANGUAGE MODELS
 
 <a href="zotero://note/u/87CG67EE/" rel="noopener noreferrer nofollow" zhref="zotero://note/u/87CG67EE/" ztype="znotelink" class="internal-link">“LORA: LOW-RANK ADAPTATION OF LARGE LANGUAGE MODELS” (Hu et al., 2021, p. 1)</a>
-
-### The Power of Scale for Parameter-Efﬁcient Prompt Tuning
-
-<a href="zotero://note/u/BZ7NXSJY/" rel="noopener noreferrer nofollow" zhref="zotero://note/u/BZ7NXSJY/" ztype="znotelink" class="internal-link">“The Power of Scale for Parameter-Efficient Prompt Tuning” (Lester et al., 2021, pp. -)</a>
