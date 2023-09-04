@@ -3,7 +3,7 @@ tags: []
 parent: ""
 collections:
     - 'My Notes'
-version: 11127
+version: 11172
 libraryID: 1
 itemKey: LJSU8E3B
 
@@ -114,6 +114,12 @@ itemKey: LJSU8E3B
 ### The Power of Scale for Parameter-Efﬁcient Prompt Tuning
 
 <a href="zotero://note/u/BZ7NXSJY/" rel="noopener noreferrer nofollow" zhref="zotero://note/u/BZ7NXSJY/" ztype="znotelink" class="internal-link">“The Power of Scale for Parameter-Efficient Prompt Tuning” (Lester et al., 2021, pp. -)</a>
+
+> <span style="color: rgb(0, 0, 0)"><span style="background-color: rgb(255, 255, 255)">为什么上面prefix-tuning只微调embedding层效果就不好，放在prompt-tuning这里效果就好了呢？因为评估的任务不同无法直接对比，个人感觉有两个因素，一个是模型规模，另一个是继续预训练，前者的可能更大些</span></span>
+>
+> 通过这两篇论文的学习可以看到gap都会随着模型的规模增大而消失的，在prefix tuning中，只在embedding层进行微调的实验，建立在GPT-2中， 模型规模是 1.5B。但是prompt tuning的实验是在T5 11B中中
+>
+> 继续预训练：<span style="color: rgb(0, 0, 0)"><span style="background-color: rgb(255, 255, 255)">T5本身的Span Corruption预训练目标和掩码词，并不适合冻结LM的场景，因为在微调中模型可以调整预训练目标和下游目标的差异，而只使用prompt可能无法弥合差异。其实这里已经能看出En-Dn框架在生成场景下没有GPT这样的Decoder来的自然。因此作者基于LM目标对T5进行继续预训练</span></span>
 
 ### Adapter
 
