@@ -4,7 +4,7 @@ parent: 'Prefix-Tuning: Optimizing Continuous Prompts for Generation'
 collections:
     - LLM
     - PEFT
-version: 11124
+version: 11145
 libraryID: 1
 itemKey: WFZGUQVG
 
@@ -12,6 +12,38 @@ itemKey: WFZGUQVG
 # <span class="highlight" data-annotation="%7B%22attachmentURI%22%3A%22http%3A%2F%2Fzotero.org%2Fusers%2F10290592%2Fitems%2F2GKACXI3%22%2C%22pageLabel%22%3A%221%22%2C%22position%22%3A%7B%22pageIndex%22%3A0%2C%22rects%22%3A%5B%5B104.763%2C757.199%2C492.785%2C770.096%5D%5D%7D%2C%22citationItem%22%3A%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F10290592%2Fitems%2F5MGDBZSU%22%5D%2C%22locator%22%3A%221%22%7D%7D" ztype="zhighlight"><a href="zotero://open-pdf/library/items/2GKACXI3?page=1">“Prefix-Tuning: Optimizing Continuous Prompts for Generation”</a></span> <span class="citation" data-citation="%7B%22citationItems%22%3A%5B%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F10290592%2Fitems%2F5MGDBZSU%22%5D%2C%22locator%22%3A%221%22%7D%5D%2C%22properties%22%3A%7B%7D%7D" ztype="zcitation">(<span class="citation-item"><a href="zotero://select/library/items/5MGDBZSU">Li and Liang, 2021, p. 1</a></span>)</span>
 
 Referred in <a href="zotero://note/u/LJSU8E3B/?ignore=1&#x26;line=34" rel="noopener noreferrer nofollow" zhref="zotero://note/u/LJSU8E3B/?ignore=1&#x26;line=34" ztype="znotelink" class="internal-link">LLM</a>
+
+<span style="color: #7953e3"><span style="background-color: rgb(255, 255, 255)">在Prefix Tuning之前的工作主要是人工设计离散的模版或者自动化搜索离散的模版。对于人工设计的模版，模版的变化对模型最终的性能特别敏感，加一个词、少一个词或者变动位置都会造成比较大的变化。而对于自动化搜索模版，成本也比较高；同时，以前这种离散化的token搜索出来的结果可能并不是最优的。</span></span>
+
+<span style="color: #7953e3"><span style="background-color: rgb(255, 255, 255)">除此之外，传统的微调范式利用预训练模型去对不同的下游任务进行微调，对每个任务都要保存一份微调后的模型权重，一方面微调整个模型耗时长；另一方面也会占很多存储空间。</span></span>
+
+<span style="color: #7953e3"><span style="background-color: rgb(255, 255, 255)">基于上述两点，Prefix Tuning提出固定预训练LM，为LM添加可训练，任务特定的前缀，这样就可以为不同任务保存不同的前缀，微调成本也小；同时，这种Prefix实际就是连续可微的Virtual Token（Soft Prompt/Continuous Prompt），相比离散的Token，更好优化，效果更好。</span></span>
+
+**<span style="color: #7953e3">技术原理：</span>**
+
+<span style="color: #7953e3"><span style="background-color: rgb(255, 255, 255)">在输入token之前构造一段任务相关的virtual tokens作为Prefix，然后训练的时候只更新Prefix部分的参数，而PLM中的其他部分参数固定。</span></span>
+
+<span style="color: #7953e3"><span style="background-color: rgb(255, 255, 255)">针对不同的模型结构，需要构造不同的Prefix。</span></span>
+
+*   **<span style="color: #7953e3"><span style="background-color: rgb(255, 255, 255)">针对自回归架构模型：在句子前面添加前缀，得到 </span></span>**`z = [PREFIX; x; y]`
+
+    <span style="color: #7953e3">，合适的上文能够在固定 LM 的情况下去引导生成下文（比如：GPT3的上下文学习）。</span>
+
+*   **<span style="color: #7953e3"><span style="background-color: rgb(255, 255, 255)">针对编码器-解码器架构模型：Encoder和Decoder都增加了前缀，得到 </span></span>**`z = [PREFIX; x; PREFIX0; y]`
+
+    <span style="color: #7953e3">。Encoder端增加前缀是为了引导输入部分的编码，Decoder 端增加前缀是为了引导后续token的生成。</span>
+
+<span style="color: #7953e3"><span style="background-color: rgb(255, 255, 255)">该方法其实和构造Prompt类似，只是Prompt是人为构造的“显式”的提示，并且无法更新参数，而Prefix则是可以学习的“隐式”的提示。</span></span>
+
+![\<img alt="" data-attachment-key="8GZIFZ69" width="1290" height="624" src="attachments/8GZIFZ69.png" ztype="zimage">](attachments/8GZIFZ69.png)
+
+<span style="color: #7953e3"><span style="background-color: rgb(255, 255, 255)">同时，为了防止直接更新Prefix的参数导致训练不稳定和性能下降的情况，在Prefix层前面加了MLP结构，训练完成后，只保留Prefix的参数。</span></span>
+
+![\<img alt="" data-attachment-key="DHZJJVWR" width="1302" height="534" src="attachments/DHZJJVWR.png" ztype="zimage">](attachments/DHZJJVWR.png)
+
+<span style="color: #7953e3"><span style="background-color: rgb(255, 255, 255)">除此之外，通过消融实验证实，只调整embedding层的表现力不够，将导致性能显著下降，因此，在每层都加了prompt的参数，改动较大。</span></span>![\<img alt="" data-attachment-key="BBGPN284" width="1302" height="774" src="attachments/BBGPN284.png" ztype="zimage">](attachments/BBGPN284.png)
+
+<span style="color: #7953e3"><span style="background-color: rgb(255, 255, 255)">另外，实验还对比了位置对于生成效果的影响，Prefix-tuning也是要略优于Infix-tuning的。其中，Prefix-tuning形式为 </span></span>`[PREFIX; x; y]`<span style="color: #7953e3"><span style="background-color: rgb(255, 255, 255)">，Infix-tuning形式为 </span></span>`[x; INFIX; y]`<span style="color: #7953e3"><span style="background-color: rgb(255, 255, 255)">。</span></span>
 
 ## <span class="highlight" data-annotation="%7B%22attachmentURI%22%3A%22http%3A%2F%2Fzotero.org%2Fusers%2F10290592%2Fitems%2F2GKACXI3%22%2C%22pageLabel%22%3A%221%22%2C%22position%22%3A%7B%22pageIndex%22%3A0%2C%22rects%22%3A%5B%5B158.891%2C605.891%2C203.376%2C616.639%5D%5D%7D%2C%22citationItem%22%3A%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F10290592%2Fitems%2F5MGDBZSU%22%5D%2C%22locator%22%3A%221%22%7D%7D" ztype="zhighlight"><a href="zotero://open-pdf/library/items/2GKACXI3?page=1">“Abstract”</a></span> <span class="citation" data-citation="%7B%22citationItems%22%3A%5B%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F10290592%2Fitems%2F5MGDBZSU%22%5D%2C%22locator%22%3A%221%22%7D%5D%2C%22properties%22%3A%7B%7D%7D" ztype="zcitation">(<span class="citation-item"><a href="zotero://select/library/items/5MGDBZSU">Li and Liang, 2021, p. 1</a></span>)</span>
 
@@ -160,13 +192,13 @@ $P_θ$和$P_θ'$ 在行维度上一样（也就是prefix的长度）但是在列
 
 *   prefix 的长度
 
-    *   ![\<img alt="" data-attachment-key="5FG29JVY" width="400" height="293.89473684210526" src="attachments/5FG29JVY.png" ztype="zimage">](attachments/5FG29JVY.png)
+    *   ![\<img alt="" data-attachment-key="5FG29JVY" width="400" height="293" src="attachments/5FG29JVY.png" ztype="zimage">](attachments/5FG29JVY.png)
     *   更长的prefix就意味着更多的参数，对于不同的任务，最佳的prefix长度也不同
     *   从经验上看，较长的前缀对推理速度几乎没有影响，因为在GPU上对整个前缀进行的注意力计算是并行化的。
 
 *   只在 embedding层进行微调，类似于微调离散的prompt
 
-    *   ![\<img alt="" data-attachment-key="XHRED66V" width="400" height="329.7071129707113" src="attachments/XHRED66V.png" ztype="zimage">](attachments/XHRED66V.png)
+    *   ![\<img alt="" data-attachment-key="XHRED66V" width="400" height="329" src="attachments/XHRED66V.png" ztype="zimage">](attachments/XHRED66V.png)
 
 *   比较prefix和infix（在x和y之间插入可训练的激活函数）
 
@@ -179,7 +211,7 @@ $P_θ$和$P_θ'$ 在行维度上一样（也就是prefix的长度）但是在列
 
     *   使用真实单词的激活来初始化前缀显著提高了生成效果
 
-        *   ![\<img alt="" data-attachment-key="YMM43MJN" width="400" height="297.907949790795" src="attachments/YMM43MJN.png" ztype="zimage">](attachments/YMM43MJN.png)
+        *   ![\<img alt="" data-attachment-key="YMM43MJN" width="400" height="297" src="attachments/YMM43MJN.png" ztype="zimage">](attachments/YMM43MJN.png)
         *   使用无关的词也比随机好
 
 ## <span class="highlight" data-annotation="%7B%22attachmentURI%22%3A%22http%3A%2F%2Fzotero.org%2Fusers%2F10290592%2Fitems%2F2GKACXI3%22%2C%22pageLabel%22%3A%229%22%2C%22position%22%3A%7B%22pageIndex%22%3A8%2C%22rects%22%3A%5B%5B72%2C620.612%2C143.743%2C631.36%5D%5D%7D%2C%22citationItem%22%3A%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F10290592%2Fitems%2F5MGDBZSU%22%5D%2C%22locator%22%3A%229%22%7D%7D" ztype="zhighlight"><a href="zotero://open-pdf/library/items/2GKACXI3?page=9">“8 Discussion”</a></span> <span class="citation" data-citation="%7B%22citationItems%22%3A%5B%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F10290592%2Fitems%2F5MGDBZSU%22%5D%2C%22locator%22%3A%229%22%7D%5D%2C%22properties%22%3A%7B%7D%7D" ztype="zcitation">(<span class="citation-item"><a href="zotero://select/library/items/5MGDBZSU">Li and Liang, 2021, p. 9</a></span>)</span>
