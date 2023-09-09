@@ -3,7 +3,7 @@ tags: []
 parent: ""
 collections:
     - 'My Notes'
-version: 11172
+version: 13050
 libraryID: 1
 itemKey: LJSU8E3B
 
@@ -101,11 +101,25 @@ itemKey: LJSU8E3B
 
 <a href="zotero://note/u/78BVHR8K/" rel="noopener noreferrer nofollow" zhref="zotero://note/u/78BVHR8K/" ztype="znotelink" class="internal-link">“LLMs for Knowledge Graph Construction and Reasoning: Recent Capabilities and Future Opportunities” (Zhu et al., 2023, p</a>
 
+### Developing a Scalable Benchmark for Assessing Large Language Models in Knowledge Graph Engineering
+
+<a href="zotero://note/u/3CQ6EFZJ/" rel="noopener noreferrer nofollow" zhref="zotero://note/u/3CQ6EFZJ/" ztype="znotelink" class="internal-link">“Developing a Scalable Benchmark for Assessing Large Language Models in Knowledge Graph Engineering” (Meyer et al., 2023</a>
+
+### LLM2KB: Constructing Knowledge Bases using instruction tuned context aware Large Language Models
+
+<a href="zotero://note/u/WABVQMYC/" rel="noopener noreferrer nofollow" zhref="zotero://note/u/WABVQMYC/" ztype="znotelink" class="internal-link">“LLM2KB: Constructing Knowledge Bases using instruction tuned context aware Large Language Models” (Nayak and Timmapathi</a>
+
+## long-context方面研究
+
+### Lost in the Middle: How Language Models Use Long Contexts
+
+<a href="zotero://note/u/3FU8FQ3T/" rel="noopener noreferrer nofollow" zhref="zotero://note/u/3FU8FQ3T/" ztype="znotelink" class="internal-link">“Lost in the Middle: How Language Models Use Long Contexts” (Liu et al., 2023, p. 1)</a>
+
 ## <span style="color: rgba(0, 0, 0, 0.9)"><span style="background-color: rgb(255, 255, 255)">PEFT(Parameter-Efficient Fine-Tuning）</span></span>
 
-### TOWARDS A UNIFIED VIEW OF PARAMETER-EFFICIENT TRANSFER LEARNING
+### Adapter
 
-<a href="zotero://note/u/R4YY5VXF/" rel="noopener noreferrer nofollow" zhref="zotero://note/u/R4YY5VXF/" ztype="znotelink" class="internal-link">“TOWARDS A UNIFIED VIEW OF PARAMETER-EFFICIENT TRANSFER LEARNING” (He et al., 2022, p. 1)</a>
+<a href="zotero://note/u/NJK8CNGD/" rel="noopener noreferrer nofollow" zhref="zotero://note/u/NJK8CNGD/" ztype="znotelink" class="internal-link">“Parameter-Efficient Transfer Learning for NLP” (Houlsby et al., 2019, p. 1)</a>
 
 ### Prefix-Tuning: Optimizing Continuous Prompts for Generation
 
@@ -121,10 +135,10 @@ itemKey: LJSU8E3B
 >
 > 继续预训练：<span style="color: rgb(0, 0, 0)"><span style="background-color: rgb(255, 255, 255)">T5本身的Span Corruption预训练目标和掩码词，并不适合冻结LM的场景，因为在微调中模型可以调整预训练目标和下游目标的差异，而只使用prompt可能无法弥合差异。其实这里已经能看出En-Dn框架在生成场景下没有GPT这样的Decoder来的自然。因此作者基于LM目标对T5进行继续预训练</span></span>
 
-### Adapter
-
-<a href="zotero://note/u/NJK8CNGD/" rel="noopener noreferrer nofollow" zhref="zotero://note/u/NJK8CNGD/" ztype="znotelink" class="internal-link">“Parameter-Efficient Transfer Learning for NLP” (Houlsby et al., 2019, p. 1)</a>
-
 ### LORA: LOW-RANK ADAPTATION OF LARGE LANGUAGE MODELS
 
 <a href="zotero://note/u/87CG67EE/" rel="noopener noreferrer nofollow" zhref="zotero://note/u/87CG67EE/" ztype="znotelink" class="internal-link">“LORA: LOW-RANK ADAPTATION OF LARGE LANGUAGE MODELS” (Hu et al., 2021, p. 1)</a>
+
+### TOWARDS A UNIFIED VIEW OF PARAMETER-EFFICIENT TRANSFER LEARNING
+
+<a href="zotero://note/u/R4YY5VXF/" rel="noopener noreferrer nofollow" zhref="zotero://note/u/R4YY5VXF/" ztype="znotelink" class="internal-link">“TOWARDS A UNIFIED VIEW OF PARAMETER-EFFICIENT TRANSFER LEARNING” (He et al., 2022, p. 1)</a>
