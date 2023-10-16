@@ -155,9 +155,9 @@ Referred in <a href="zotero://note/u/LJSU8E3B/?ignore=1&#x26;line=34" rel="noope
 
     *   进行事件分类，将其形式化为从给定文本中获取事件类型的文本分类问题。
 
-*   事件角色argument extraction抽取
+*   论元argument extraction抽取
 
-    *   形式化为一种抽取式机器阅读理解（MRC）问题，该问题可以从第一阶段预测的事件类型中识别出特定事件角色
+    *   形式化为一种抽取式机器阅读理解（MRC）问题，该问题可以从第一阶段预测的事件类型中识别出特定事件的论元
 
 ## <span class="highlight" data-annotation="%7B%22attachmentURI%22%3A%22http%3A%2F%2Fzotero.org%2Fusers%2F10290592%2Fitems%2F7WRJNNXP%22%2C%22pageLabel%22%3A%223%22%2C%22position%22%3A%7B%22pageIndex%22%3A2%2C%22rects%22%3A%5B%5B306.142%2C620.359%2C384.508%2C631.107%5D%5D%7D%2C%22citationItem%22%3A%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F10290592%2Fitems%2FDRPPNSAS%22%5D%2C%22locator%22%3A%223%22%7D%7D" ztype="zhighlight"><a href="zotero://open-pdf/library/items/7WRJNNXP?page=3">“3 Experiment”</a></span> <span class="citation" data-citation="%7B%22citationItems%22%3A%5B%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F10290592%2Fitems%2FDRPPNSAS%22%5D%2C%22locator%22%3A%223%22%7D%5D%2C%22properties%22%3A%7B%7D%7D" ztype="zcitation">(<span class="citation-item"><a href="zotero://select/library/items/DRPPNSAS">Wei et al., 2023, p. 3</a></span>)</span>
 
