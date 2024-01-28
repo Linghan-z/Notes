@@ -1,3 +1,9 @@
 {
-  "accentColor": ""
+  "accentColor": "",
+  "cssTheme": "Blue Topaz",
+  "theme": "system",
+  "baseFontSize": 18,
+  "monospaceFontFamily": "Hack Nerd Font",
+  "textFontFamily": "Hack Nerd Font",
+  "interfaceFontFamily": "Hack Nerd Font"
 }
