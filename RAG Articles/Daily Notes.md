@@ -16,6 +16,10 @@ T-RAG
 
 KnowledGPT: Enhancing Large Language Models with Retrieval and Storage Access on Knowledge Bases
 
+
+
+RAG VS FINE-TUNING: PIPELINES, TRADEOFFS, AND A CASE STUDY ON AGRICULTURE
+
 ----
 
 ## 每天的记录
@@ -76,3 +80,45 @@ KnowledGPT: Enhancing Large Language Models with Retrieval and Storage Access on
   - 找到目标实体
 
 - 除此之外，还涉及了一个私人的KG，用于记录历史问题
+
+---
+
+### 2024.03.03
+
+> 开题开毁了。。。还是多看文章吧
+
+---
+
+### 2024.03.03
+
+交了开题、看了电影、还让写本子..
+
+---
+
+### 2024.03.05
+
+论文：RAG VS FINE-TUNING: PIPELINES, TRADEOFFS, AND A CASE STUDY ON AGRICULTURE
+
+> 微软的一篇文章，看了两天
+>
+> 涉及到农业领域的RAG+Finetune
+>
+> 做了大量的实验（也没好好看）
+
+值得记录的一些点：
+
+- 对于PDF转文本的处理方面（转为TEI格式）
+
+- 问题生成的方法
+
+- 答案生成的技术（RAG, FAISS retrieval tool）+ GPT-4 + custom Prompt
+
+  - > 问题和答案分着生成效果更好
+
+- 微调的技术（现在都看不懂）
+
+- 提出的很完整的评估标准（包括对于LLMs生成的问题的评估）
+
+- 很完整的实验（虽然没仔细看）
+
+> **加油ヾ(◍°∇°◍)ﾉﾞ**
