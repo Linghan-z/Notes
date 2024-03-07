@@ -1,9 +1,9 @@
 # README
 
-## Daily Notes
+## Unsorted Notes
 
 时有时无的笔记...
 
-## Markdowns
+## Daily Notes
 
 读论文的笔记...

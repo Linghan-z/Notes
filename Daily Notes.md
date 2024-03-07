@@ -46,7 +46,7 @@ RAG VS FINE-TUNING: PIPELINES, TRADEOFFS, AND A CASE STUDY ON AGRICULTURE
 > 4. 实体对齐方法，参考老饶发的那篇
 > 5. 合适的微调方法
 
-<img src="./assets/CleanShot 2024-02-28 at 12.43.49@2x.png" alt="CleanShot 2024-02-28 at 12.43.49@2x" style="zoom:50%;" />
+<img src="./RAG Articles/assets/CleanShot 2024-02-28 at 12.43.49@2x.png" alt="CleanShot 2024-02-28 at 12.43.49@2x" style="zoom:50%;" />
 
 ---
 
@@ -122,3 +122,26 @@ RAG VS FINE-TUNING: PIPELINES, TRADEOFFS, AND A CASE STUDY ON AGRICULTURE
 - 很完整的实验（虽然没仔细看）
 
 > **加油ヾ(◍°∇°◍)ﾉﾞ**
+
+---
+
+2024.03.07
+
+论文：Survey on Factuality in Large Language Models: Knowledge, Retrieval and Domain-Specificity
+
+>  西湖大学的关于LLMs事实性的综述
+>
+> 挺庞大的60多页，粗略看看吧，争取今天看完，大致了解一下
+
+值得记录的一些东西：
+
+- 2.2 hallucination 和 factuality issue 不同
+- 3.1.1 有很多评价指标的总结，后续需要的话再看着搜索吧
+
+- 看麻了。。。。。
+  - 前面是介绍的事实性问题和一些指标
+  - 后面是一些方法
+  
+    - 探索LLMs幻觉的事实性错误的研究
+    - 增强LLMs的研究
+  - > 心乱如麻 这样吧就，回头有需要再看笔记吧
