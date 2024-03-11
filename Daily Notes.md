@@ -103,7 +103,7 @@
 
 ---
 
-2024.03.07
+### 2024.03.07
 
 论文：Survey on Factuality in Large Language Models: Knowledge, Retrieval and Domain-Specificity
 
@@ -126,7 +126,7 @@
 
 ---
 
-2024.03.08
+### 2024.03.08
 
 > 改了一天的本子
 >
@@ -136,15 +136,15 @@
 
 ----
 
-2024.03.09
+### 2024.03.09
 
 > 又又又又又又又又改了一天的本子，感觉老饶的思路真的清晰..
 
 ----
 
-2024.03.10
+### 2024.03.10
 
-Article：Enhancing Temporal Knowledge Graph Forecasting with Large Language Models via Chain-of-History Reasoning
+**Article：**Enhancing Temporal Knowledge Graph Forecasting with Large Language Models via Chain-of-History Reasoning
 
 > 利用LLMs的语义理解能力，设计了CoH，逐步探索TKG中的高阶历史信息，给LLMs用于TKG的外推
 >
@@ -165,3 +165,39 @@ Article：Enhancing Temporal Knowledge Graph Forecasting with Large Language Mod
 > 思考：
 >
 > - 可以看到LLMs在TKG外推的领域还是差的不少，以后可以研究一下
+
+----
+
+### 2024.03.11
+
+**Article:** Beyond Isolation: Multi-Agent Synergy for Improving Knowledge Graph Construction
+
+> 这sb文章用一堆华丽辞藻，真的难读
+>
+> - Multi-agent方法，进行KG construction
+> - 三个agent互相支撑
+>   - NER
+>   - RE
+>   - EE
+> - 按轮次来进行
+
+一些地方总结一下就是：
+
+1. 这种multi-agent并且按照轮次互相补充的方法涉及团队协作，肯定要比使用LLMs进行仅仅一轮的生成的效果要好
+
+1. **去中心化**而不至于太依赖某一个Agent的发挥
+
+1. 在Agent交流的时候，通过优化（简化）输入，可以有更好的效果
+
+   1. > 所以给LLMs的一些信息还是要尽量的言简意赅，过多描述反而不好
+
+1. 提供一定程度的背景知识，效果会更好
+
+1. 这种本来任务之间就有一定的相互支撑，再设置多个agent，也可以让agent虽然在执行不同的任务，但是也在相互支撑
+
+> 思考：
+>
+> 1. 是否可以提供更多的专业背景知识，或者说利用领域模型，或者针对某个任务特别训练过的模型，或者再增加一些增强方法呢？
+>    1. 比如对于NER任务，如果提供本体网络给LLMs，或者以RAG的方法让其把NER分成：1. 定位本体 2. 实体抽取，是否可以呢？（但是也不知道这样是否合理，考虑可行性）
+> 2. 针对上面的5. 如果只有单一任务，比如只有NER任务的话，Agent的技术应该如何使用呢？
+
