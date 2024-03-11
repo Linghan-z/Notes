@@ -1,25 +1,3 @@
-Retrieval-Augmented Generation for Large Language Models： A Survey
-
-
-
-Graph RAG: Unleashing the Power of Knowledge Graphs with LLM
-
-
-
-Interleaving Retrieval with Chain-of-Thought Reasoning for Knowledge-Intensive Multi-Step Questions
-
-
-
-T-RAG
-
-
-
-KnowledGPT: Enhancing Large Language Models with Retrieval and Storage Access on Knowledge Bases
-
-
-
-RAG VS FINE-TUNING: PIPELINES, TRADEOFFS, AND A CASE STUDY ON AGRICULTURE
-
 ----
 
 ## 每天的记录
@@ -145,3 +123,45 @@ RAG VS FINE-TUNING: PIPELINES, TRADEOFFS, AND A CASE STUDY ON AGRICULTURE
     - 探索LLMs幻觉的事实性错误的研究
     - 增强LLMs的研究
   - > 心乱如麻 这样吧就，回头有需要再看笔记吧
+
+---
+
+2024.03.08
+
+> 改了一天的本子
+>
+> 学了一下EndNote
+>
+> 我发现ConnectedPaper还挺好用的
+
+----
+
+2024.03.09
+
+> 又又又又又又又又改了一天的本子，感觉老饶的思路真的清晰..
+
+----
+
+2024.03.10
+
+Article：Enhancing Temporal Knowledge Graph Forecasting with Large Language Models via Chain-of-History Reasoning
+
+> 利用LLMs的语义理解能力，设计了CoH，逐步探索TKG中的高阶历史信息，给LLMs用于TKG的外推
+>
+> - ==利用LLMs的方法只能作为Graph-based model的一个补充部分，因为效果差的挺多，可见还是GNN的分析结构的方法效果好一些==
+>
+> 后面的实验的分析比较乱，感觉挺一般的
+>
+> 问题：
+>
+> 1. 在step1好像把未来的预测都限制在了这n个一阶关系里了，不知道会不会有问题
+> 1. 实验效果性能的提升很小
+> 1. 消融实验把名字给消了，说是为测试先验知识，但是没有了语义理解这还一样吗？
+>
+> Tips：
+>
+> 1. 为了防止LLMs利用先验知识，把日期改成了第xxx天
+>
+> 思考：
+>
+> - 可以看到LLMs在TKG外推的领域还是差的不少，以后可以研究一下
