@@ -260,7 +260,7 @@ Article：Evidence-Focused Fact Summarization for Knowledge-Augmented Zero-Shot 
 
 ---
 
-### 2024.03.13
+### 2024.03.13{#2024.03.13}
 
 **Article：**Unlocking the Power of Large Language Models for Entity Alignment
 
@@ -305,5 +305,49 @@ Article：Evidence-Focused Fact Summarization for Knowledge-Augmented Zero-Shot 
 > 1. 逐步采样和投票（Step-wise Sampling-and-Voting）：这种方法将任务分解为多个步骤，并在每个步骤中应用采样和投票，以减少累积错误并提高整体性能。
 > 2. 分层采样和投票（Hierarchical Sampling-and-Voting）：这种方法将低概率任务分解为多个高概率子任务，并分层解决，同时可以使用不同模型来处理不同概率的子任务以降低成本。
 
+---
 
+### 2024.03.14 & 2024.03.15
+
+> 3.14 改了一下LLMs+KGC的一个图，还需要再扩展一下思路，临时看了个KGC的文章..
+>
+> <img src="./assets/CleanShot 2024-03-15 at 10.52.50@2x.png" alt="CleanShot 2024-03-15 at 10.52.50@2x" style="zoom:50%;" />
+>
+> - ==**想到的可以改进的点：**==
+>
+>   - 用代码，参考 [2024.03.13](#2024.03.13)
+>
+> - 结合KGC模型，是不是也可以用[2024.03.13](#2024.03.13)，使用LLMs做决策，而KGC的模型作为候选的筛选？
+>
+> - > 为啥都是那篇文章的想法啊...想不到别的
+
+
+
+**Article：**Multi-perspective Improvement of Knowledge Graph Completion with Large Language Models
+
+> - 这篇文章的思路就是从实体信息、关系、结构三个角度使用LLMs扩充信息，并还用KGC模型完成KGC的任务
+>
+>   - 实体：获取相关的信息（还被我抄走了哈哈）
+>
+>   - 关系：
+>
+>     - 关系定义——对应Global，缩小关系的选择范围，
+>
+>       - >  其实我刚开始看到prompt的时候没感觉出来他在缩小范围....
+>
+>     - 关系组成的三元组的定义——对应local，用于定位可能的头尾实体
+>
+>       - > 讲道理，有没有可能他的这一块比较乱，没有想好策略，总感觉prompt和解释的不太一样
+>
+>     - 关系reverse——对应reverse，反转关系
+>
+>       - > 这个反转属实是没太看明白，那个reverse prediction反向预测？后面有机会再了解一下
+>
+> 一点想法：
+>
+> - 对于关系的加工有点复杂了，而且他这个prompt我觉得设计思路挺好的，**缩小关系范围、定义头尾实体**可能的范围，但是这prompt我确实是么太看明白是为啥这样写呀
+> - 感觉最近的一个实体对齐一个这个kgc都是用LLM的知识扩展信息，尤其是实体的自己的定义，这个思路可以
+> - 使用LLMs做决策，而KGC的模型作为候选的筛选，这样不知道效果如何
+> - prompt还是得写好
+> - 多看看别的kgc增强的方法
 
