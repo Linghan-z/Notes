@@ -1,10 +1,26 @@
+## Memorandum
+
+1. [T-RAG](#2024.02.29):实体图（树），增强领域QA的实体对齐（比较偏领域）
+2. [KnowledGPT](#2024.03.02):用GPT-4生成搜索的代码，搜索知识作为上下文增强LLM问答
+3. [RAG VS FINE-TUNING](#2024.03.05):<微软>GPT-4生成用于微调的问题和答案（分步生成更好）；针对领域进行数据集和微调指令构建、微调、RAG，很完整，还包括了GPT-4生成的问题的评估标准，可以参考
+4. [Survey on Factuality in Large Language Models](#2024.03.07):模型的事实性
+5. [Chain-of-History](#2024.03.10):逐步探索TKG中的高阶历史信息，给LLMs用于TKG的外推
+6. [Beyond Isolation](#2024.03.11):multi-agent进行图谱的构建（三个agent，分别ner、re、ee）按论次进行
+7. [ChatIE](#2024.03.11):任务分解进行IE（NER、RE、EE）
+8. [Evidence-Focused Fact Summarization](#2024.03.12):感觉这个方法有点问题，但是思路可取，就是从helpfulness和faithfulness两个角度出发，优化summarizer，对于普通的或者是大的上下文还是可以的吧，KG的结构化信息好像有点别扭
+9. [Knowledge Representation Learning](#2024.03.13):使用KRL的方法来选择候选；用LLM来进行推理判断（还有LLM的知识增强）；这个用**代码**的这个感觉效果真的不错呀
+10. [MPIKGC](#2024.03.14_2024.03.15):从实体信息、关系、结构三个角度使用LLMs扩充信息，并还用KGC模型完成KGC的任务
+11. [KnowPAT](#2024.03.14_2024.03.15):KG+LLM 微调——偏好对齐+领域QA任务（偏好分成style+knowledge）
+
+
+
 ----
 
 ## 每天的记录
 
 ----
 
-### 2024.02.29
+### 2024.02.29{#2024.02.29}
 
 论文：T-RAG: LESSONS FROM THE LLM TRENCHES
 
@@ -28,7 +44,7 @@
 
 ---
 
-### 2024.03.02
+### 2024.03.02{#2024.03.02}
 
 论文：KnowledGPT: Enhancing Large Language Models with Retrieval and Storage Access on Knowledge Bases
 
@@ -73,7 +89,7 @@
 
 ---
 
-### 2024.03.05
+### 2024.03.05{#2024.03.05}
 
 论文：RAG VS FINE-TUNING: PIPELINES, TRADEOFFS, AND A CASE STUDY ON AGRICULTURE
 
@@ -103,7 +119,7 @@
 
 ---
 
-### 2024.03.07
+### 2024.03.07{#2024.03.07}
 
 论文：Survey on Factuality in Large Language Models: Knowledge, Retrieval and Domain-Specificity
 
@@ -142,7 +158,7 @@
 
 ----
 
-### 2024.03.10
+### 2024.03.10{#2024.03.10}
 
 **Article：**Enhancing Temporal Knowledge Graph Forecasting with Large Language Models via Chain-of-History Reasoning
 
@@ -168,7 +184,7 @@
 
 ----
 
-### 2024.03.11
+### 2024.03.11{#2024.03.11}
 
 **Article:** Beyond Isolation: Multi-Agent Synergy for Improving Knowledge Graph Construction
 
@@ -236,9 +252,9 @@
 
 -----
 
-### 2024.03.12
+### 2024.03.12 {#2024.03.12}
 
-Article：Evidence-Focused Fact Summarization for Knowledge-Augmented Zero-Shot Question Answering
+**Article**：Evidence-Focused Fact Summarization for Knowledge-Augmented Zero-Shot Question Answering
 
 > 主要是利用了摘要的技术，从helpfulness和faithfulness两个角度出发，优化summarizer
 >
@@ -307,7 +323,7 @@ Article：Evidence-Focused Fact Summarization for Knowledge-Augmented Zero-Shot 
 
 ---
 
-### 2024.03.14 & 2024.03.15
+### 2024.03.14_2024.03.15{#2024.03.14_2024.03.15}
 
 > 3.14 改了一下LLMs+KGC的一个图，还需要再扩展一下思路，临时看了个KGC的文章..
 >
@@ -315,9 +331,9 @@ Article：Evidence-Focused Fact Summarization for Knowledge-Augmented Zero-Shot 
 >
 > - ==**想到的可以改进的点：**==
 >
->   - 用代码，参考 [2024.03.13](#2024.03.13)
+>   - 用代码，参考 [2024.03.13](#KG-Code_LLM_KRL)
 >
-> - 结合KGC模型，是不是也可以用[2024.03.13](#2024.03.13)，使用LLMs做决策，而KGC的模型作为候选的筛选？
+> - 结合KGC模型，是不是也可以用[2024.03.13](#KG-Code_LLM_KRL)，使用LLMs做决策，而KGC的模型作为候选的筛选？
 >
 > - > 为啥都是那篇文章的想法啊...想不到别的
 
@@ -351,3 +367,18 @@ Article：Evidence-Focused Fact Summarization for Knowledge-Augmented Zero-Shot 
 > - prompt还是得写好
 > - 多看看别的kgc增强的方法
 
+**Article：**Knowledgeable Preference Alignment for LLMs in Domain-specific Question Answering
+
+> 知识型偏好**对齐**
+>
+> 记录：
+>
+> - 讲了在微调中如何应用这个偏好对齐：preference set，一给QA对给多个回答（l个），然后标记ri作为偏好分数，训练L_align 对齐的损失函数，并和之前的领域QA的训练的损失函数结合在一起作为最终的训练目标
+> - 感觉是一个不错的微调策略，既针对了QA任务，又针对了偏好，对偏好分成style（简洁，人类更容易接受）、knowledge（不接受无用知识，减轻检索的错误带来的误导）
+>   - 在偏好设置的时候，有打分机制
+>     - golden answer和不同能力的LLM给出的答案从高到低排名
+>     - golden answer和不同的知识排序（检索的top-k -> 空，没有检索结果 -> topk+1到top2k被视为误导信息，相关却没用，排名最后，影响也最大）
+> - 他们这个图是真的好看又清晰
+>   - <img src="./LLM+KG/assets/CleanShot 2024-03-15 at 16.17.08@2x.png" alt="CleanShot 2024-03-15 at 16.17.08@2x" style="zoom:50%;" />
+
+- 如果可以用得到的话，还是可以参考他们的对齐的思路的
