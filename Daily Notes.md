@@ -11,6 +11,9 @@
 9. [Knowledge Representation Learning](#2024.03.13):使用KRL的方法来选择候选；用LLM来进行推理判断（还有LLM的知识增强）；这个用**代码**的这个感觉效果真的不错呀
 10. [MPIKGC](#2024.03.14_2024.03.15):从实体信息、关系、结构三个角度使用LLMs扩充信息，并还用KGC模型完成KGC的任务
 11. [KnowPAT](#2024.03.14_2024.03.15):KG+LLM 微调——偏好对齐+领域QA任务（偏好分成style+knowledge）
+12. [Contextualization Distillation](#2024.03.16):蒸馏，用LLM生成上下文描述，增强基于PLM的KGC模型
+13. [KG-LLM](#2024.03.17):multi-hop 链接预测，只用了CoT和ICL，prompt用的是实体和关系的id，没有用语意信息，鉴定为史
+14. [KoPA](#2024.03.18):只有KGC的triple classification，没有link prediction。先encode结构信息，然后通过adapter把涉及到的三元组的embedding映射到virtual token中，通过预训练，让LLM学习到利用这个virtual token的模式
 
 
 
@@ -382,3 +385,63 @@
 >   - <img src="./LLM+KG/assets/CleanShot 2024-03-15 at 16.17.08@2x.png" alt="CleanShot 2024-03-15 at 16.17.08@2x" style="zoom:50%;" />
 
 - 如果可以用得到的话，还是可以参考他们的对齐的思路的
+
+---
+
+### 2024.03.16{#2024.03.16}
+
+**文章：**Contextualization Distillation from Large Language Model for Knowledge Graph Completion
+
+> KGC 
+>
+> 代码：https://github.com/DavidLi0406/Contextulization-Distillation
+
+记录：
+
+- 知识蒸馏，用LLM生成上下文描述，增强基于PLM的KGC模型
+- entity和triplet的都有用LLM生成description
+- 路径用$T$ --> ($ED$, $TD$)：同时生成实体描述和三元组描述（主要方法）
+  - 分析是因为PLM模型对于处理复杂的上下文的能力不够，即使用分解的方法，$T$ --> $ED$ --> $TD$，也不行
+  - 自己对于这一块还比较陌生...
+
+---
+
+### 2024.03.17{#2024.03.17}
+
+**Article：**Knowledge Graph Large Language Model (KG-LLM) for Link Prediction
+
+> 多跳链接预测
+>
+> 只用了CoT和ICL
+>
+> > 真的服了，感觉一点收获都没有，下次就该及时止损不看了.....
+>
+> 预测还是用的entity和relation的id，如果用上语意关系难道不会更好吗
+>
+> 唉啥啊这是
+>
+> 算了，今天就看视频看代码吧，服了服了
+
+---
+
+### 2024.03.18{#2024.03.18}
+
+**Article:**Making Large Language Models Perform Better in Knowledge Graph Completion
+
+> 这文章我觉得思路挺好的，就是问题在于它做的KGC，但是只在triple classification任务上做的
+>
+> 思路：
+>
+> 1. self-supervised structural embedding pre-training 学习KG的结构嵌入，得到structural embeddings
+> 2. 通过knowledge prefix adapter，将prompt的那个triple的头、关系、尾的刚刚学习的结构的embedding映射到virtual knowledge token 中，放在prompt的最前面
+>    1. 放最前面因为decoder-only的LLMs可以良好地利用前面的信息（单向）
+>    2. 通过映射可以在prompt中加入当前的节点的结构信息，文中的长度是头、关系、尾都是3个token
+> 3. 预训练，让LLM学习到利用这个virtual knowledge的模式，利用这个里面的结构信息来进行任务
+>
+> 一点点想法：
+>
+> 1. 这样encode 图谱的结构信息然后映射到prompt中的想法挺好的，但是好像也不是第一个这样做的
+>    1. MiniGPT-4: Enhancing Vision-Language Understanding with Advanced Large Language Models.他引用了这篇文章
+> 2. 是不是可以借鉴这个思路来在KGC的link prediction的任务上也用上这样的结构信息，还是多看看文章，link prediction了解的太少了
+> 3. 有没有其他的创新的方法可以引入结构信息的？
+
