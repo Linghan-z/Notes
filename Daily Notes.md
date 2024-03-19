@@ -14,6 +14,7 @@
 12. [Contextualization Distillation](#2024.03.16):蒸馏，用LLM生成上下文描述，增强基于PLM的KGC模型
 13. [KG-LLM](#2024.03.17):multi-hop 链接预测，只用了CoT和ICL，prompt用的是实体和关系的id，没有用语意信息，鉴定为史
 14. [KoPA](#2024.03.18):只有KGC的triple classification，没有link prediction。先encode结构信息，然后通过adapter把涉及到的三元组的embedding映射到virtual token中，通过预训练，让LLM学习到利用这个virtual token的模式
+15. [KICGPT](#2024.03.18):利用传统的embedding-based的方法（文中分的更清楚，triple-based）选出candidate，然后通过定义方法设置demonstration和prompt，让LLM对传统方法的输出进行reranking，得到最终的结果
 
 
 
@@ -445,3 +446,25 @@
 > 2. 是不是可以借鉴这个思路来在KGC的link prediction的任务上也用上这样的结构信息，还是多看看文章，link prediction了解的太少了
 > 3. 有没有其他的创新的方法可以引入结构信息的？
 
+**Article:**KICGPT: Large Language Model with Knowledge in Context for Knowledge Graph Completion
+
+> 2023.12
+>
+> EMNLP
+>
+> 方法：
+>
+> - 因为KGC补尾实体需要输入所有的尾实体来进行比较，直接用LLM不行
+> - 因此利用一个Triple-based 模型作为retriever，先选择已经排序好的top-m个candidate
+> - 然后把candidate给LLM进行re-rank，得到更好的结果
+> - 给LLM的出了candidate，还有一些demonstration
+>   - 一种是analogy，相同的关系作为demonstration，还加入了一个方法进行排序，增强demonstration里面的例子的diversity
+>   - 一种是supplement，给相同的头实体的triple作为demonstration，要求相近，通过BM25分数排序
+> - 在prompt阶段也分了四个阶段来进行
+>
+> 思考：
+>
+> - 过多的上下文会不会不好，感觉还有优化的余地
+> - 这个做法挺完善的，我反正是想不到什么了，不仅仅想到了利用基础方法进行排序，还想到了如何制作demonstration
+>
+> 
