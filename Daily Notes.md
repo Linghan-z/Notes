@@ -468,3 +468,32 @@
 > - 这个做法挺完善的，我反正是想不到什么了，不仅仅想到了利用基础方法进行排序，还想到了如何制作demonstration
 >
 > 
+
+----
+
+### 2024.03.20{#2024.03.20}
+
+
+
+**Article:**AutoRD: An Automatic and End-to-End System for Rare Disease Knowledge Graph Construction Based on Ontologies-enhanced Large Language Models
+
+> 感觉思路简单，没啥参考价值
+
+**Article:**Let Your Graph Do the Talking: Encoding Structured Data for LLMs
+
+> 这篇文章的思路就是encode 结构化信息，放在prompt的前面，然后给LLM让其decode
+>
+> 思路类似于之前的那个[triple classification](#2024.03.18)
+>
+> 记录：
+>
+> - 把KG通过Encoder进行编码（GNN），
+> - 然后根据不同的情景取出（read out）相应的编码
+> - 将编码通过全链接层投影到LLM的token的空间中
+>
+> 还是看不懂CNN这里的知识点，去学一下
+
+
+
+
+

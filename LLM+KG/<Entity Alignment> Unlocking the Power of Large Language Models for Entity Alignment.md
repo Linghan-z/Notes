@@ -61,6 +61,8 @@
 
 ## 3 Method
 
+<img src="./assets/CleanShot 2024-03-19 at 17.17.55@2x.png" alt="CleanShot 2024-03-19 at 17.17.55@2x" style="zoom:50%;" />
+
 ### 3.1 Overview of the ChatEA Framework
 
 围绕三个目标设计ChatEA的架构
