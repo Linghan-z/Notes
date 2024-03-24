@@ -1,5 +1,7 @@
 ## Memorandum
 
+<img src="./assets/CleanShot 2024-03-22 at 22.06.43@2x.png" alt="CleanShot 2024-03-22 at 22.06.43@2x" style="zoom:50%;" />
+
 1. [T-RAG](#2024.02.29):实体图（树），增强领域QA的实体对齐（比较偏领域）
 2. [KnowledGPT](#2024.03.02):用GPT-4生成搜索的代码，搜索知识作为上下文增强LLM问答
 3. [RAG VS FINE-TUNING](#2024.03.05):<微软>GPT-4生成用于微调的问题和答案（分步生成更好）；针对领域进行数据集和微调指令构建、微调、RAG，很完整，还包括了GPT-4生成的问题的评估标准，可以参考
@@ -15,6 +17,8 @@
 13. [KG-LLM](#2024.03.17):multi-hop 链接预测，只用了CoT和ICL，prompt用的是实体和关系的id，没有用语意信息，鉴定为史
 14. [KoPA](#2024.03.18):只有KGC的triple classification，没有link prediction。先encode结构信息，然后通过adapter把涉及到的三元组的embedding映射到virtual token中，通过预训练，让LLM学习到利用这个virtual token的模式
 15. [KICGPT](#2024.03.18):利用传统的embedding-based的方法（文中分的更清楚，triple-based）选出candidate，然后通过定义方法设置demonstration和prompt，让LLM对传统方法的输出进行reranking，得到最终的结果
+16. [GraphToken](#2024.03.20):learns an encoding function that generates fine-tuned soft-token prompts.使用encoder（GNN）来将KG的编码，通过对于GraphToken的参数进行训练，把KG的信息映射到latent prompt space，再加上初始prompt的embedding的空间中，让LLM进行decode
+17. [GraphQA](#2024.03.24):LLMs对于图的推理，将图结构编码成text，增强LLM的推理
 
 
 
@@ -446,7 +450,7 @@
 > 2. 是不是可以借鉴这个思路来在KGC的link prediction的任务上也用上这样的结构信息，还是多看看文章，link prediction了解的太少了
 > 3. 有没有其他的创新的方法可以引入结构信息的？
 
-**Article:**KICGPT: Large Language Model with Knowledge in Context for Knowledge Graph Completion
+**Article**: Large Language Model with Knowledge in Context for Knowledge Graph Completion
 
 > 2023.12
 >
@@ -481,7 +485,7 @@
 
 **Article:**Let Your Graph Do the Talking: Encoding Structured Data for LLMs
 
-> 这篇文章的思路就是encode 结构化信息，放在prompt的前面，然后给LLM让其decode
+> 这篇文章的思路就是encode结构化信息，放在prompt的embedding的前面，然后给LLM让其decode
 >
 > 思路类似于之前的那个[triple classification](#2024.03.18)
 >
@@ -489,11 +493,30 @@
 >
 > - 把KG通过Encoder进行编码（GNN），
 > - 然后根据不同的情景取出（read out）相应的编码
-> - 将编码通过全链接层投影到LLM的token的空间中
+> - 将编码通过全链接层投影到LLM的token的embedding的空间中
 >
 > 还是看不懂CNN这里的知识点，去学一下
 
+---
 
+### 2024.03.24{#2024.03.24}
 
+文章：TALK LIKE A GRAPH: ENCODING GRAPHS FOR LARGE LANGUAGE MODELS
 
+> 用不同的方式将图编码为文本，让LLMs学习并进行图的推理
+>
+> - 不同的场景、思路，比如用Integer encoding (e.g., Node 0).、名字、甚至是Game of Thrones的人物
+> - 把问题question也encoding 成具有一定的北京的，比如人物关系：node degree->朋友数量、node->count 人物数量、edge->count 朋友关系数量、connected nodes->listing friends
+>
+> 这个只是研究的图
+>
+> 一些关键的结论：
+>
+> - 对于基础的basic Graph task，LLM的能力不太行
+> - 对于简单的任务，simple prompt要比cot来的好，就是说如果不涉及multi-step的话，还硬用cot反而不行
+> - graph encoding可以提升LLM的graph task的能力，不同的encoding方法，对于图的结构的侧重不同，因此提升也不同
+> - 对于问题进行编码可以提供上下文背景，提升任务的性能
+> - 将关系赋予更多的语意（multiple relation），可以丰富上下文，有更多的信息让LLM解决问题
+> - 模型越大，graph reasoning ability越好
+> - 不同的图结构会影响，过多的边（过于复杂的图结构）会引入无关的信息，阻碍LLM推理
 
