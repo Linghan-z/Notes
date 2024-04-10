@@ -19,6 +19,7 @@
 15. [KICGPT](#2024.03.18):利用传统的embedding-based的方法（文中分的更清楚，triple-based）选出candidate，然后通过定义方法设置demonstration和prompt，让LLM对传统方法的输出进行reranking，得到最终的结果
 16. [GraphToken](#2024.03.20):learns an encoding function that generates fine-tuned soft-token prompts.使用encoder（GNN）来将KG的编码，通过对于GraphToken的参数进行训练，把KG的信息映射到latent prompt space，再加上初始prompt的embedding的空间中，让LLM进行decode
 17. [GraphQA](#2024.03.24):LLMs对于图的推理，将图结构编码成text，增强LLM的推理
+18. [GraphAdapter](#2024.04.09)
 
 
 
@@ -520,3 +521,12 @@
 > - 模型越大，graph reasoning ability越好
 > - 不同的图结构会影响，过多的边（过于复杂的图结构）会引入无关的信息，阻碍LLM推理
 
+---
+
+### 2024.04.09{#2024.04.09}
+
+> 我又来看文章了！
+
+文章：Can GNN be Good Adapter for LLMs?
+
+> WWW'24
