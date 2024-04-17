@@ -19,7 +19,10 @@
 15. [KICGPT](#2024.03.18):利用传统的embedding-based的方法（文中分的更清楚，triple-based）选出candidate，然后通过定义方法设置demonstration和prompt，让LLM对传统方法的输出进行reranking，得到最终的结果
 16. [GraphToken](#2024.03.20):learns an encoding function that generates fine-tuned soft-token prompts.使用encoder（GNN）来将KG的编码，通过对于GraphToken的参数进行训练，把KG的信息映射到latent prompt space，再加上初始prompt的embedding的空间中，让LLM进行decode
 17. [GraphQA](#2024.03.24):LLMs对于图的推理，将图结构编码成text，增强LLM的推理
-18. [GraphAdapter](#2024.04.09)
+18. [GraphAdapter](#2024.04.09)：训练一个Graph Adapter，融合PLM encode 的语意信息和GNNencode的结构信息
+19. [Advancing Graph Representation Learning](#2024.04.12):关于graph representation learning for LLMs的短综述
+20. [Exploring the Potential of Large Language Models (LLMs) in Learning on Graphs](#2024.04.15):LLM如何学习图谱的信息，结合GNN？
+21. [Graph Language Models](#2024.04.16) 提出graph language model，利用LM的初始化参数，调整了位置编码方式以及self-attention
 
 
 
@@ -484,6 +487,8 @@
 
 > 感觉思路简单，没啥参考价值
 
+#### Let Your Graph Do the Talking
+
 **Article:**Let Your Graph Do the Talking: Encoding Structured Data for LLMs
 
 > 这篇文章的思路就是encode结构化信息，放在prompt的embedding的前面，然后给LLM让其decode
@@ -496,11 +501,13 @@
 > - 然后根据不同的情景取出（read out）相应的编码
 > - 将编码通过全链接层投影到LLM的token的embedding的空间中
 >
-> 还是看不懂CNN这里的知识点，去学一下
+> 还是看不懂GNN这里的知识点，去学一下
 
 ---
 
 ### 2024.03.24{#2024.03.24}
+
+#### TALK LIKE A GRAPH
 
 文章：TALK LIKE A GRAPH: ENCODING GRAPHS FOR LARGE LANGUAGE MODELS
 
@@ -527,6 +534,206 @@
 
 > 我又来看文章了！
 
+#### GraphAdapter
+
 文章：Can GNN be Good Adapter for LLMs?
 
 > WWW'24
+>
+> 提出了GraphAdapter
+>
+> - 使用GNNencode结构信息
+> - 使用PLM encode语意信息
+> - concat两个
+> - 在PLM的语意的哪里加一个residual Connect 因为不是所有的场景结构信息都有用
+
+---
+
+### 2024.04.12{#2024.04.12}
+
+#### graph representation learning for LLMs
+
+Advancing Graph Representation Learning with Large Language Models: A Comprehensive Survey of Techniques
+
+> 一篇关于graph representation learning for LLMs的短综述
+>
+> - <img src="./LLM+KG/assets/CleanShot 2024-04-12 at 10.02.06@2x.png" alt="CleanShot 2024-04-12 at 10.02.06@2x" style="zoom:50%;" />
+> - 如何更好地结合KG以及LLM
+>   - knowledge extractors：抽取KG中的信息
+>     - attribute：利用LLM增强文本信息以及encode more comprehensive semantic features
+>     - structure：
+>       - 增强图的结构
+>       - 利用图的结构 
+>         - **InstructGLM [Ye et al., 2023]**
+>         - **GraphGPT [Tang et al., 2023]**
+>       - 问题：对于全局的信息的处理
+>     - label：
+>       - 利用LLM处理kg的label
+>       - 问题：没有考虑结构信息
+>   - knowledge organizers：融合（学习）KG的信息
+>     - GNN-centric
+>       - 用LLM来initializeGNN的输入、optimize输入结构、生成label
+>     - LLM-centric
+>       - 难点：graph信息要transfer into textual info
+>         - 图和描述连接的信息
+>     - GNN+LLM
+>       - integration
+>       - <img src="./LLM+KG/assets/CleanShot 2024-04-12 at 14.10.19@2x.png" alt="CleanShot 2024-04-12 at 14.10.19@2x" style="zoom:50%;" />
+>       - input-level
+>         - 基于llm的：graph -> textual
+>         - 基于GNN的：使用LLM生成virtual nodes
+>       - hidden-level
+>         - merge LLM的文本的语意表示以及GNN的结构信息的表示
+>         - **如何全面利用两种模态的表征来生成具有更强表现能力的高阶表示仍然是一个需要解决的重要问题。**
+>       - alignment-based
+>         - 对齐对同一个实体的GNN和LLM的特征表示
+>           - contrastive alignment：对比学习
+>           - iterative：在知识传递的学习过程中节点和图之间进行迭代交互
+>           - distillation：**Train your own gnn teacher: Graph-aware distillation on textual graphs.**
+
+>  我在想有没有什么方法可以通过更短的上下文来让LLMs的一次prompt中有更多的信息呢？
+>
+> - GNN 加层聚合邻域信息？
+
+---
+
+### 2024.04.15{#2024.04.15}
+
+Exploring the Potential of Large Language Models (LLMs) in Learning on Graphs
+
+- 分了两个部分介绍如何让llm学习graph
+- 还是关注如何与gnn进行联合
+- <img src="./LLM+KG/assets/CleanShot 2024-04-15 at 14.38.46@2x.png" alt="CleanShot 2024-04-15 at 14.38.46@2x" style="zoom:50%;" />
+- <img src="./LLM+KG/assets/CleanShot 2024-04-15 at 14.42.26@2x.png" alt="CleanShot 2024-04-15 at 14.42.26@2x" style="zoom:50%;" />
+- 介绍了LLM如何处理KG信息，主要有两个方向：处理数据（特征）、生成结果
+- 值得考虑的是如何更好地结合GNN，来让LLM有效地学习到结构信息
+  - 一个值得记录的地方是：在聚合了不同的标签的邻居之后，会影响判断，这岂不就是说明不能有效地处理结构信息吗....
+
+
+#### graphSAGE
+
+> 提到了一个方法
+>
+> GraphSAGE，17年的方法，理解是更好地处理大的图
+>
+> - 是Induction框架
+> - GraphSage不为图中每一个节点学习单独的embedding，而是学习一个聚合函数，该函数通过从节点的本地邻域中抽样和聚合特征来生成节点embedding
+> - GraphSage利用节点特征信息（例如，文本属性、节点配置文件信息、节点度）来学习泛化到不可见节点的嵌入函数
+> - GraphSage可以利用所有图中存在的结构特征（如节点度），所以也可以应用于没有节点特征的图
+> - GraphSage设计了一个无监督损失函数，允许在没有特定任务监督的情况下进行训练
+> - <img src="./assets/CleanShot 2024-04-15 at 15.36.55@2x.png" alt="CleanShot 2024-04-15 at 15.36.55@2x" style="zoom:50%;" />
+>
+> **GraphSAGE算法**
+>
+> - Embedding生成算法
+>
+> - <img src="./assets/CleanShot 2024-04-15 at 15.38.01@2x.png" alt="CleanShot 2024-04-15 at 15.38.01@2x" style="zoom:50%;" />
+>   - 在每次迭代或搜索深度时，节点从它们的局部邻居那里聚合信息，随着这个过程的迭代，节点从图中以自身为中心的更远处逐渐获得越来越多的信息。
+>   - 算法1描述了在整个图$\mathcal{G=(V,E)}$和所有节点的特$\bold{x}_v,\,\forall v\in \mathcal{V}$作为输入的情况下，embedding生成过程。下面将描述如何将其推广到mini-batch的情况。
+>     - **输入：**
+>       - $k$表示当前外循环的step（步数，也表示搜索深度，即搜索了$k$阶邻居）；
+>       - $\bold{h}^k$表示在$k$step 上的节点表示，其中$\bold{h}_v^0=\bold{x}_v$
+>     - **第1步：** (第4行) 每个节点$v\in\mathcal{V}$将它的直接邻居节点的表示$\{\bold{h}_u^{k-1},\,\forall u\in\mathcal{N}(v)\}$聚合为一个向量$\bold{h}_{\mathcal{N(v)}}^{k-1}$。这个聚合步骤依赖于在外循环的先前迭代中生成的表示(即$k−1$)，并且$k=0$表示被定义为输入节点特征。
+>     - **第2步：** (第5行) 将聚合的邻居表示$\bold{h}_{\mathcal{N(v)}}^{k-1}$与当前节点的表示 $\bold{h}_v^{k-1}$进行concat并送入全连接层中（权重为 $\bold{W}^k$），生成下一次循环需要的节点表示$ \bold{h}_v^{k}$。
+>     - **第3步：** 如果内循环未结束，则进入第1步，直接使用$\bold{h}_v^{k}$作为节点$v$的特征用于生成其他节点表示(如作为其他节点的邻域节点)；如果是内循环结束，(第7行) 则将$\bold{h}_v^{k}$进行原地标准化$ \bold{h}_v^{k}/\lVert \bold{h}_v^{k} \rVert_2$，进入第4步。
+>     - **第4步：** 如果外循环未结束，将第3步生成的$\bold{h}_v^{k}$用于$k+1$阶节点表示的生成，进入第1步。如果外循环结束，(第9行) 则将第3步生成的节点表示作为节点的最终输出。
+>   - 第3步聚合邻居节点所用到的聚合函数$AGGREGATE_k$
+>   - **扩展到mini-batch：**给定一组输入节点，首先采样 $K$ 阶邻居集合，然后执行内循环，与第3行不同的是，不是遍历所有节点，而是只计算满足每个深度递归所需的节点表示。
+>
+> 
+>
+> #### inductive v.s. transductive learning 
+>
+> 涉及到了一个inductive learning以及transductive learning
+>
+> - <img src="./assets/CleanShot 2024-04-15 at 15.08.39@2x.png" alt="CleanShot 2024-04-15 at 15.08.39@2x" style="zoom:50%;" />
+>
+>   - >半监督学习可进一步分为纯(pure)半监督学习和直推学习(transductive learning)，前者假定训练数据中的未标记样本并非带预测的数据，而后者则假定学习过程中所考虑的未标记样本恰是待预测数据，学习的目的就是在这些未标记样本上获得最优泛化性能。换言之，纯半监督学习是基于“开放世界”假设，希望学到的模型能适用于训练过程中未观察到的数据；直推学习是基于“封闭世界”假设，仅试图对学习过程中观察到的未标记样本进行预测。
+>
+>   - <img src="./assets/CleanShot 2024-04-15 at 15.11.07@2x.png" alt="CleanShot 2024-04-15 at 15.11.07@2x" style="zoom:50%;" />
+>
+> - `transductive learning`，翻译为直推学习
+>   - ==**Transduction** 是从观察到的、特定的训练样本到特定的测试的推理。==
+>   - Transductive learning 事先看到了所有数据，包括训练和测试数据集。通常训练集是带标签的数据，测试集是不带标签的数据。从已经观察到的训练集和测试集中学习，然后预测测试数据集的标签。在训练过程中，使用的是测试集中除了标签以外的其他信息，比如在图中测试数据的结构信息（参见kipf-GCN）。
+>
+> - (纯)半监督学习，可以理解为 `Inductive Learning`。
+>   - ==**Induction** 是从观察到的训练样本生成规则推理，然后将规则推理应用于测试样本。==
+>     - Inductive learning 与我们通常所知的传统监督学习相同。基于已经拥有的标记训练数据集构建和训练机器学习模型。然后我们使用这个训练过的模型来预测以前从未遇到过的测试数据集的标签
+>
+> https://blog.csdn.net/u012762410/article/details/127213748
+
+#### **拉普拉斯矩阵**
+
+> - https://blog.csdn.net/qq_45448654/article/details/122692366?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522171316420416800185812503%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=171316420416800185812503&biz_id=0
+>
+> - https://blog.csdn.net/weixin_45884316/article/details/117431134?depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-8-117431134-blog-122692366.235%5Ev43%5Epc_blog_bottom_relevance_base7
+>
+> <img src="./assets/CleanShot 2024-04-15 at 15.18.07@2x.png" alt="CleanShot 2024-04-15 at 15.18.07@2x" style="zoom:50%;" />
+>
+> - 拉普拉斯矩阵的定义与性质
+>
+>   - 对于一个有n个顶点的图G，它的拉普拉斯矩阵(Laplacian Matrix)定义为：$L=D−A$
+>
+>     - 其中，D是图G的度矩阵，A是图G的邻接矩阵。L中的元素可定义为：
+>       - <img src="./assets/CleanShot 2024-04-15 at 15.19.01@2x.png" alt="CleanShot 2024-04-15 at 15.19.01@2x" style="zoom:50%;" />
+>
+>   -  通常， 我们需要将拉普拉斯矩阵进行归一化。常用的有两种方式。
+>
+>     1. 对称归一化的拉普拉斯矩阵(Symmetric Normalized Laplacian Matrix)
+>
+>        ​	<img src="./assets/CleanShot 2024-04-15 at 15.19.46@2x.png" alt="CleanShot 2024-04-15 at 15.19.46@2x" style="zoom:50%;" />
+>
+>     2. 随机游走归一化的拉普拉斯矩阵(Random Walk Normalized Laplacian Matrix)
+>
+>        ​	<img src="./assets/CleanShot 2024-04-15 at 15.20.07@2x.png" alt="CleanShot 2024-04-15 at 15.20.07@2x" style="zoom:50%;" />
+>
+>   -  从这个L矩阵中可以观察到拉普拉斯矩阵的以下几条性质。
+>
+>     - L是对称的
+>     - L是半正定矩阵（每个特征值$ \lambda_i{\geq}0$）
+>     - L的每一行每一列的和为0
+>     - L的最小特征值为0。给定一个特征向量$v_0=(1,1,\cdots,1)^T$ ，根据上一条性质，L的每一行之和为0，所以$Lv_0=0$
+>
+> - 拉普拉斯矩阵的推导与意义
+
+### 2024.04.16{#2024.04.16}
+
+#### Graph Language Models
+
+- 利用语言模型的参数初始化，调整位置编码的方式以及自注意力
+
+- 利用Levi graph
+
+  - <img src="./assets/CleanShot 2024-04-17 at 11.24.30@2x.png" alt="CleanShot 2024-04-17 at 11.24.30@2x" style="zoom:50%;" />
+
+  - > 好像类似的工作比如graph2text，都要把图变成这种一个token一个节点的形式，然后像处理序列一样处理图
+
+- 能够同时处理图信息和文本信息
+
+- 除了在单个triplet中有相对位置编码
+
+  - 还在global的设定中学习了triplet之间（G2G）的注意力
+  - 在有文本的情况下，还有G2T、T2G
+
+---
+
+### 2024.04.17{#2024.04.17}
+
+#### Language is All a Graph Needs
+
+使用自然语言描述图结构，然后指令微调LLM来学习相关的信息
+
+<img src="./assets/CleanShot 2024-04-17 at 16.12.13@2x.png" alt="CleanShot 2024-04-17 at 16.12.13@2x" style="zoom:50%;" />
+
+<img src="./assets/CleanShot 2024-04-17 at 16.12.33@2x.png" alt="CleanShot 2024-04-17 at 16.12.33@2x" style="zoom:50%;" />
+
+> Google那个文章，Talk like a graph，通过文本描述图结构可以让LLM更好地学习图结构
+>
+> 二者都是通过natural language来让LLM学习图中的知识的
+>
+> - 有一个任务是**Graph-to-text**，转换图到文本，如果这个思路可行的话那么可以研究一下
+> - `但是我在想对于一个图谱来说里面重要的本身就是文本知识，图谱的结构是为了帮助更好地理解和聚合信息用的，那么确实文本这一块是比较重要的...感觉如果只用结构来预处理递给LLM的信息这个思路是否可行呢`
+> - ***如果可以有效地利用一个小模型以及相关的规则，在图谱中找到足够解决当前问题的有效信息，再让LLM进行推理，那么效果应该会很不错***
+>   - *这里的话，给LLM的时候应该还可以用这个方法给他结构信息*
+>   - ***那么如何<u>在图谱的支持下</u>推理并找到解决当下问题所需要的信息呢？***
+
