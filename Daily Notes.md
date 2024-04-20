@@ -23,6 +23,8 @@
 19. [Advancing Graph Representation Learning](#2024.04.12):关于graph representation learning for LLMs的短综述
 20. [Exploring the Potential of Large Language Models (LLMs) in Learning on Graphs](#2024.04.15):LLM如何学习图谱的信息，结合GNN？
 21. [Graph Language Models](#2024.04.16) 提出graph language model，利用LM的初始化参数，调整了位置编码方式以及self-attention
+22. [MoE](#2024.04.17)
+23. [Mamba](#2024.04.18)
 
 
 
@@ -696,6 +698,8 @@ Exploring the Potential of Large Language Models (LLMs) in Learning on Graphs
 >
 > - 拉普拉斯矩阵的推导与意义
 
+---
+
 ### 2024.04.16{#2024.04.16}
 
 #### Graph Language Models
@@ -737,3 +741,43 @@ Exploring the Potential of Large Language Models (LLMs) in Learning on Graphs
 >   - *这里的话，给LLM的时候应该还可以用这个方法给他结构信息*
 >   - ***那么如何<u>在图谱的支持下</u>推理并找到解决当下问题所需要的信息呢？***
 
+
+
+---
+
+### 2024.04.17{#2024.04.17}
+
+Mixtral of Experts
+
+- Mixtral 8 x 7B
+- Decoder-only
+- 在transformer的FFN之前，添加一个routing neural network，用来route输入的token到不同的Expert中（可以理解为分类问题）
+- 每一个expert都是一个FFN
+
+---
+
+### 2024.04.18{#2024.04.18}
+
+Mamba: Linear-Time Sequence Modeling with Selective State Spaces
+
+- SSM 状态空间模型 state space model
+  - RNN-like
+  - 核心思想是在隐状态的转移上没有非线性，不依赖于输入（矩阵A）--->可以提前预计算，打破RNN的必须递归地计算每一个中间状态
+    - 可以转换为矩阵的乘法
+- Mamba selective state space model
+  - 最重要的矩阵A不依赖于输入会导致无法根据输入做针对性推理（即没有选择性，模型无法捕捉到重要的输入）
+    - BC、Lambda矩阵变为输入数据驱动
+    - 最终计算得到的Aba和Bba矩阵都有Lambda矩阵参与，因此也是输入数据驱动
+  - 硬件感知算法
+    - parallel scan
+    - 定义prefix sum
+    - 更简单的SSM结构
+
+---
+
+### 2024.04.19{#2024.04.19}
+
+Graph Chain-of-Thought: Augmenting Large Language Models by Reasoning on Graphs
+
+- <img src="./LLM+KG/assets/CleanShot 2024-04-19 at 15.10.43@2x.png" alt="CleanShot 2024-04-19 at 15.10.43@2x" style="zoom:50%;" />
+- 三个阶段利用LLM在图上进行推理
