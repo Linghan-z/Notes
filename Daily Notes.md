@@ -25,6 +25,8 @@
 21. [Graph Language Models](#2024.04.16) 提出graph language model，利用LM的初始化参数，调整了位置编码方式以及self-attention
 22. [MoE](#2024.04.17)
 23. [Mamba](#2024.04.18)
+24. [Graph Chain-of-Thought](#2024.04.19):三个阶段利用LLM在图上进行推理：LLM reasoning，LLM-graph interaction，Graph execution
+25. [ResearchAgent](#2024.04.20):利用两个Agent：Research Agent 和Reviewing Agent来做文章idea生成，结合了图谱的检索
 
 
 
@@ -777,7 +779,22 @@ Mamba: Linear-Time Sequence Modeling with Selective State Spaces
 
 ### 2024.04.19{#2024.04.19}
 
-Graph Chain-of-Thought: Augmenting Large Language Models by Reasoning on Graphs
+#### Graph Chain-of-Thought: Augmenting Large Language Models by Reasoning on Graphs
 
 - <img src="./LLM+KG/assets/CleanShot 2024-04-19 at 15.10.43@2x.png" alt="CleanShot 2024-04-19 at 15.10.43@2x" style="zoom:50%;" />
-- 三个阶段利用LLM在图上进行推理
+- 三个阶段利用LLM在图上进行推理：LLM reasoning，LLM-graph interaction，Graph execution
+
+---
+
+### 2024.04.20{#2024.04.20}
+
+#### ResearchAgent: Iterative Research Idea Generation over Scientific Literature with Large Language Models
+
+<img src="./Agents/assets/CleanShot 2024-04-20 at 11.16.43@2x.png" alt="CleanShot 2024-04-20 at 11.16.43@2x" style="zoom:50%;" />
+
+利用两个Agent：Research Agent 和Reviewing Agent来做文章idea生成，结合了图谱的检索
+
+- 每个Agent都分三个阶段进行：
+  - Problem identification
+  - Method Development
+  - Experiment Design
