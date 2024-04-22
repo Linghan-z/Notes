@@ -29,6 +29,7 @@
 25. [ResearchAgent](#2024.04.20):利用两个Agent：Research Agent 和Reviewing Agent来做文章idea生成，结合了图谱的检索
 26. [LLM-GNN](#2024.04.21)：label-free node classification、使用llm annotate
 27. [GenTKGQA](#2024.04.22): Subgraph Retrieval: utilize LLM’s intrinsic knowledge；Answer Generation: virtual knowledge indicators: fuse gnn+textual representataion
+28. [KGLLMs](#2024.04.22):KG和PLM结合的综述，从pretraining，during training 和 posttraining三个角度出发分析
 
 
 
@@ -835,4 +836,11 @@ Key Points：label-free node classification、使用llm annotate
 >   - 消融实验中，甚至只保留的时间信息都效果不错啊
 > - 确实可以看到LLM对于implicit temporal information的处理能力是不足的，尤其是相对的那些信息
 
-## 
+#### Give Us the Facts: Enhancing Large Language Models with Knowledge Graphs for Fact-aware Language Modeling
+
+Key Points：
+
+- knowledge graph-enhanced large language models (KGLLMs)
+  - before-training enhancement
+  - during-training enhancement
+  - post-training enhancement
