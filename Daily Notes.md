@@ -27,6 +27,8 @@
 23. [Mamba](#2024.04.18)
 24. [Graph Chain-of-Thought](#2024.04.19):三个阶段利用LLM在图上进行推理：LLM reasoning，LLM-graph interaction，Graph execution
 25. [ResearchAgent](#2024.04.20):利用两个Agent：Research Agent 和Reviewing Agent来做文章idea生成，结合了图谱的检索
+26. [LLM-GNN](#2024.04.21)：label-free node classification、使用llm annotate
+27. [GenTKGQA](#2024.04.22): Subgraph Retrieval: utilize LLM’s intrinsic knowledge；Answer Generation: virtual knowledge indicators: fuse gnn+textual representataion
 
 
 
@@ -798,3 +800,39 @@ Mamba: Linear-Time Sequence Modeling with Selective State Spaces
   - Problem identification
   - Method Development
   - Experiment Design
+
+---
+
+### 2024.04.21{#2024.04.21}
+
+#### LABEL-FREE NODE CLASSIFICATION ON GRAPHS WITH LARGE LANGUAGE MODELS (LLMS)
+
+Key Points：label-free node classification、使用llm annotate
+
+- 聚类方法结合其他方法进行node selection
+- 用llm对选择的node进行标注
+- 筛选掉效果差的
+- 使用GNN进行任务
+
+---
+
+### 2024.04.22{#2024.04.22}
+
+#### Two-stage Generative Question Answering on Temporal Knowledge Graph Using Large Language Models
+
+> Key Points：
+>
+> **GenTKGQA**: generative temporal knowledge graph question answering framework
+>
+> - Subgraph Retrieval: utilize LLM’s intrinsic knowledge
+> - Answer Generation: 
+>   - virtual knowledge indicators: fuse gnn+textual representataion
+
+> 思考：
+>
+> - 在这个文章里GNN真的有用吗？
+>   - subgraph是比较小的
+>   - 消融实验中，甚至只保留的时间信息都效果不错啊
+> - 确实可以看到LLM对于implicit temporal information的处理能力是不足的，尤其是相对的那些信息
+
+## 
